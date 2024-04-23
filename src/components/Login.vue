@@ -8,23 +8,56 @@
     </div>
 
     <div id="inputFragment">
-    <a-input style="position: relative; top: 20px;" :style="{width:'320px'}" default-value="" placeholder="Username" allow-clear />
+    <a-input style="position: relative; top: 20px;" :style="{width:'320px'}" default-value="" placeholder="Username" allow-clear v-model="username" />
     <br/>
-    <a-input style="position: relative; top: 50px;"  :style="{width:'320px'}" default-value="" placeholder="Password" allow-clear />
+    <a-input style="position: relative; top: 50px;"  :style="{width:'320px'}" default-value="" placeholder="Password" allow-clear v-model="password" />
     <br/>
-    <a-button style="position: relative; top: 80px; left: -0px;" :style="{width: '320px'}"  type="primary" @click="homePage">登陆</a-button>
+    <a-button style="position: relative; top: 80px; left: -0px;" :style="{width: '320px'}"  type="primary" @click="login">登陆</a-button>
     </div>
     
 </template>
 
 <script>
 
+import { ref } from "vue";
 import  router  from "../router.js";
 
 export default {
+  data() {
+    return {
+      username: "",
+      password: ""
+    }
+  },
   methods: {
-    homePage() {
-      router.push("/home");
+    login() {
+      let v = this
+      fetch("http://localhost:8080/api/login", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "username": v.username,
+          "password": v.password
+        })
+      })
+      .then(response => {
+        if (response.ok){
+          console.log(response)
+          
+          console.log(response.headers.get('Authorization'))
+          // 获取响应头部的所有键值对 
+          const headers = response.headers; 
+          // 遍历所有头部信息 
+          headers.forEach((value, name) => { 
+            console.log(`${name}: ${value}`); 
+          });
+        }
+      })
+      .then(data => {
+        // console.log(data)
+      })
     }
   }
 }
