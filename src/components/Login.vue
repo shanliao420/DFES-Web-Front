@@ -14,13 +14,15 @@
     <br/>
     <a-button style="position: relative; top: 80px; left: -0px;" :style="{width: '320px'}"  type="primary" @click="login">登陆</a-button>
     </div>
+
     
 </template>
 
 <script>
 
-import { ref } from "vue";
 import  router  from "../router.js";
+import { IconExclamationCircleFill } from '@arco-design/web-vue/es/icon';
+import { Message } from "@arco-design/web-vue";
 
 export default {
   data() {
@@ -32,7 +34,7 @@ export default {
   methods: {
     login() {
       let v = this
-      fetch("http://localhost:8080/api/login", {
+      fetch("http://localhost:9080/api/login", {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -46,17 +48,17 @@ export default {
         if (response.ok){
           console.log(response)
           
-          console.log(response.headers.get('Authorization'))
-          // 获取响应头部的所有键值对 
-          const headers = response.headers; 
-          // 遍历所有头部信息 
-          headers.forEach((value, name) => { 
-            console.log(`${name}: ${value}`); 
-          });
+          let auth = response.headers.get("Authorization")
+          console.log(auth)
+          localStorage.setItem("Authorization", auth)
+          Message.success("登陆成功")
+          router.push("/home")
+        
         }
       })
-      .then(data => {
-        // console.log(data)
+      .catch(error => {
+        console.log(error)
+        Message.error("登陆失败")
       })
     }
   }

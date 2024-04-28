@@ -8,18 +8,71 @@
     </div>
 
     <div id="inputFragment">
-    <a-input style="position: relative; top: 20px;" :style="{width:'320px'}" default-value="" placeholder="Username" allow-clear />
+    <a-input style="position: relative; top: 20px;" :style="{width:'320px'}" default-value="" placeholder="Username" allow-clear v-model="rusername"/>
 
-    <a-input style="position: relative; top: 50px;"  :style="{width:'320px'}" default-value="" placeholder="Password" allow-clear />
+    <a-input style="position: relative; top: 50px;"  :style="{width:'320px'}" default-value="" placeholder="Password" allow-clear v-model="rpassword" />
 
-    <a-input style="position: relative; top: 80px;"  :style="{width:'320px'}" default-value="" placeholder="Email" allow-clear />
+    <a-input style="position: relative; top: 80px;"  :style="{width:'320px'}" default-value="" placeholder="Email" allow-clear v-model="remail" />
 
-    <a-input style="position: relative; top: 110px;"  :style="{width:'320px'}" default-value="" placeholder="Phone" allow-clear />
+    <a-input style="position: relative; top: 110px;"  :style="{width:'320px'}" default-value="" placeholder="Phone" allow-clear v-model="rphone" />
 
-    <a-button style="position: relative; top: 140px; left: -0px;" :style="{width: '320px'}"  type="primary">注册</a-button>
+    <a-button style="position: relative; top: 140px;left: -0px;" :style="{width: '320px'}"  type="primary" @click="register">注册</a-button>
     </div>
     
 </template>
+
+<script>
+
+import  router  from "../router.js";
+import { IconExclamationCircleFill } from '@arco-design/web-vue/es/icon';
+import { Message } from "@arco-design/web-vue";
+
+export default {
+  data() {
+    return {
+      rusername: "",
+      rpassword: "",
+      remail: "",
+      rphone: ""
+    }
+  },
+  methods: {
+    register() {
+      let v = this
+      fetch("http://localhost:9080/api/register", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "username": v.rusername,
+          "password": v.rpassword,
+          "email": v.remail,
+          "phone": v.rphone
+        })
+      })
+      .then(response => {
+        return response.json()
+      })
+      .then(data => {
+        console.log(data)
+        if (data.code === 0) {
+          Message.success(data.msg)
+          router.push({path: '/'})
+        } else {
+          Message.error(data.msg)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        Message.error("注册失败")
+      })
+    }
+  }
+}
+
+
+</script>
 
 
 <style>
