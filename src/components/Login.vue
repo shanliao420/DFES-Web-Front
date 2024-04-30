@@ -10,7 +10,7 @@
     <div id="inputFragment">
     <a-input style="position: relative; top: 20px;" :style="{width:'320px'}" default-value="" placeholder="Username" allow-clear v-model="username" />
     <br/>
-    <a-input style="position: relative; top: 50px;"  :style="{width:'320px'}" default-value="" placeholder="Password" allow-clear v-model="password" />
+    <a-input-password v-model:visibility="visibility" :defaultVisibility="true" style="position: relative; top: 50px;"  :style="{width:'320px'}" default-value="" placeholder="Password" allow-clear v-model="password" />
     <br/>
     <a-button style="position: relative; top: 80px; left: -0px;" :style="{width: '320px'}"  type="primary" @click="login">登陆</a-button>
     </div>
