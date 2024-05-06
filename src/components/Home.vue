@@ -157,7 +157,7 @@
         .then(data => {
           console.log(data)
           if (data.code === 0) {
-            Message.success(data.msg)
+            // Message.success(data.msg)
             treeData.value = trans2TreeData(data.data)
             treeData.value = [...treeData.value];
             console.log(treeData.value)
