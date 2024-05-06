@@ -25,6 +25,12 @@ import { IconExclamationCircleFill } from '@arco-design/web-vue/es/icon';
 import { Message } from "@arco-design/web-vue";
 
 export default {
+  setup() {
+    // if (localStorage.getItem("Authorization") != null) {
+    //   Message.success("您已登陆");
+    //   router.push("/home");
+    // }
+  },
   data() {
     return {
       username: "",
