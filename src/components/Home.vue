@@ -1,5 +1,5 @@
 <template>
-  <div style="width: 550px; padding: 2px; overflow: auto">
+  <div style="width: 550px; padding: 2px; overflow: auto; margin-left: 20px; margin-top: 20px;">
     <a-tree
     blockNode
     expand-all
@@ -37,7 +37,7 @@
 
   <div style="width: 500px;">
 
-  <a-upload draggable style="position: absolute; width: 400px; left: 560px; top: 10px;" :custom-request="uploadRequest">
+  <a-upload draggable style="position: absolute; width: 400px; left: 700px; top: 20px;" :custom-request="uploadRequest">
     <template #upload-button>
       <div
         style="
